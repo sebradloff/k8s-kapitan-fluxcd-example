@@ -1,0 +1,7 @@
+classes:
+  - common
+  - components.ingress-nginx.v1
+  - components.gatekeeper.v1
+
+parameters:
+  target_name: dev

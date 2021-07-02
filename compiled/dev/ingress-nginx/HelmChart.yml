@@ -1,0 +1,14 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmChart
+metadata:
+  name: ingress-nginx
+  namespace: ingress-nginx
+spec:
+  chart: ingress-nginx
+  interval: 5m
+  sourceRef:
+    kind: HelmRepository
+    name: ingress-nginx-github-repo
+  valuesFiles:
+    - compiled/dev/ingress-nginx/helm-values-files/common.yml
+  version: 3.34.0

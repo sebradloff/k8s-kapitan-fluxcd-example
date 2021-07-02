@@ -1,0 +1,26 @@
+parameters:
+  gatekeeper:
+    version: v1
+  kapitan:
+    compile:
+      - name: copy-gatekeeper-values-file
+        input_type: copy
+        output_path: gatekeeper/helm-values-files/
+        input_paths:
+          - components/gatekeeper/${gatekeeper:version}/helm-values-files/common.yml
+
+      - name: template-gatekeeper-fluxcd-resources
+        input_type: kadet
+        input_paths:
+          - templates/fluxcd-helm
+        output_type: yml
+        output_path: gatekeeper/
+        input_params:
+          name: gatekeeper
+          namespace: gatekeeper-system
+          chart_name: gatekeeper
+          chart_version: 3.5.1
+          repository_name: gatekeeper-github-repo
+          repository_url: https://open-policy-agent.github.io/gatekeeper/charts
+          helm_values_files:
+            - compiled/${kapitan:vars:target}/gatekeeper/helm-values-files/common.yml

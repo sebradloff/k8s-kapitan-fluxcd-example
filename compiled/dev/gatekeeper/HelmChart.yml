@@ -1,0 +1,14 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmChart
+metadata:
+  name: gatekeeper
+  namespace: gatekeeper-system
+spec:
+  chart: gatekeeper
+  interval: 5m
+  sourceRef:
+    kind: HelmRepository
+    name: gatekeeper-github-repo
+  valuesFiles:
+    - compiled/dev/gatekeeper/helm-values-files/common.yml
+  version: 3.5.1

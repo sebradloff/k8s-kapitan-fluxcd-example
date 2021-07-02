@@ -1,0 +1,14 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmChart
+metadata:
+  name: NAME
+  namespace: NAMESPACE
+spec:
+  chart: CHART_NAME
+  version: CHART_VERSION
+  sourceRef:
+    name: REPOSITORY_NAME
+    kind: HelmRepository
+  interval: 5m
+  valuesFiles:
+    - PATH_TO_HELM_VALUES_FILE_IN_COMPILED_DIR
