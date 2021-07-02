@@ -1,7 +1,9 @@
 classes:
   - common
+  - components.flux-system
   - components.ingress-nginx.v1
   - components.gatekeeper.v1
 
 parameters:
   target_name: dev
+  flux_version: v0-15-3

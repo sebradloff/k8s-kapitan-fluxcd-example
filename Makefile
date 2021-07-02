@@ -29,3 +29,10 @@ brew_install_kind_and_fluxcd: ## brew installs kind and fluxcd if not present
 kind_cluster_setup: ## creates a kind cluster with the provided CLUSTER_NAME
 	@[ "${CLUSTER_NAME}" ] || ( echo ">> CLUSTER_NAME is not set"; exit 1 )
 	kind create cluster --name $(CLUSTER_NAME) --kubeconfig $(KUBECONFIG)
+
+.PHONY: flux_create_component
+flux_create_component: ## uses flux cli to create flux bootstrap manifests referenced by the flux-system component
+	@[ "${FLUX_VERSION}" ] || ( echo ">> FLUX_VERSION is not set"; exit 1 )
+	FLUX_VERSION_DASH=$(shell echo "$(FLUX_VERSION)" | sed 's/\./-/g'); \
+	mkdir -p "components/flux-system/$${FLUX_VERSION_DASH}"; \
+	flux install --version=$(FLUX_VERSION) --dry-run --export > "components/flux-system/$${FLUX_VERSION_DASH}/bootstrap.yml"

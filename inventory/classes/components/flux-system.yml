@@ -1,0 +1,14 @@
+parameters:
+  kapitan:
+    compile:
+      - name: copy-flux-system-boostrap
+        input_type: copy
+        output_path: flux-system/
+        input_paths:
+          - components/flux-system/${flux_version}/
+
+      - name: template-flux-system-sync
+        input_type: jinja2
+        output_path: flux-system/
+        input_paths:
+          - components/flux-system/sync/
