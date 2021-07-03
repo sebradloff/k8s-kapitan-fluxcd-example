@@ -30,6 +30,15 @@ kind_cluster_setup: ## creates a kind cluster with the provided CLUSTER_NAME and
 	@[ "${CLUSTER_NAME}" ] || ( echo ">> CLUSTER_NAME is not set"; exit 1 )
 	kind create cluster --name $(CLUSTER_NAME) --kubeconfig $(KUBECONFIG) --config=$(PWD)/scripts/kind-config.yml
 
+.PHONY: fluxcd_bootstrap
+fluxcd_bootstrap: ## installs fluxcd and bootstraps GitRepository to sync
+	@[ "${CLUSTER_NAME}" ] || ( echo ">> CLUSTER_NAME is not set"; exit 1 )
+	kubectl apply --context kind-$(CLUSTER_NAME) --kubeconfig $(KUBECONFIG) -f compiled/$(CLUSTER_NAME)/flux-system/bootstrap.yml
+	echo "sleep 15s to wait for all boostrap pods to start" && sleep 15
+	kubectl apply --context kind-$(CLUSTER_NAME) --kubeconfig $(KUBECONFIG) -f compiled/$(CLUSTER_NAME)/flux-system/GitRepository.yml
+	kubectl apply --context kind-$(CLUSTER_NAME) --kubeconfig $(KUBECONFIG) -f compiled/$(CLUSTER_NAME)/flux-system/Kustomization.yml
+
+
 .PHONY: flux_create_component
 flux_create_component: ## uses flux cli to create flux bootstrap manifests referenced by the flux-system component
 	@[ "${FLUX_VERSION}" ] || ( echo ">> FLUX_VERSION is not set"; exit 1 )
