@@ -3,6 +3,15 @@ parameters:
     version: v1
   kapitan:
     compile:
+      - name: template-gatekeeper-namespace
+        input_type: kadet
+        input_paths:
+          - templates/create-namespace
+        output_type: yml
+        output_path: gatekeeper/
+        input_params:
+          name: gatekeeper
+
       - name: template-gatekeeper-fluxcd-resources
         input_type: kadet
         input_paths:
