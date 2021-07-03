@@ -10,7 +10,7 @@ parameters:
         output_type: yml
         output_path: gatekeeper/
         input_params:
-          name: gatekeeper
+          name: gatekeeper-system
 
       - name: template-gatekeeper-fluxcd-resources
         input_type: kadet
