@@ -1,0 +1,11 @@
+parameters:
+  sock_shop:
+    version: v1
+  kapitan:
+    compile:
+      - name: copy-sock-shop-fluxcd-resources
+        input_type: copy
+        input_paths:
+          - components/sock-shop/
+        output_type: yml
+        output_path: sock-shop/

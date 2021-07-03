@@ -2,6 +2,7 @@ classes:
   - common
   - components.flux-system
   - components.ingress-nginx-kind.v1
+  - components.sock-shop.v1
 
 parameters:
   target_name: dev
