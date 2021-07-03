@@ -3,12 +3,6 @@ parameters:
     version: v1
   kapitan:
     compile:
-      - name: copy-ingress-nginx-values-file
-        input_type: copy
-        output_path: ingress-nginx/helm-values-files/
-        input_paths:
-          - components/ingress-nginx/${ingress_nginx:version}/helm-values-files/common.yml
-
       - name: template-ingress-nginx-fluxcd-resources
         input_type: kadet
         input_paths:
@@ -23,4 +17,4 @@ parameters:
           repository_name: ingress-nginx-github-repo
           repository_url: https://kubernetes.github.io/ingress-nginx
           helm_values_files:
-            - compiled/${kapitan:vars:target}/ingress-nginx/helm-values-files/common.yml
+            - components/ingress-nginx/${ingress_nginx:version}/helm-values-files/common.yml

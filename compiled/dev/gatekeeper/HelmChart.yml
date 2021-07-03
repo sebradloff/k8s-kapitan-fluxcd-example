@@ -1,14 +1,96 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: HelmChart
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
   name: gatekeeper
   namespace: gatekeeper-system
 spec:
-  chart: gatekeeper
+  chart:
+    spec:
+      chart: gatekeeper
+      sourceRef:
+        kind: HelmRepository
+        name: gatekeeper-github-repo
+        namespace: gatekeeper-system
+      version: 3.5.1
+  install:
+    remediation:
+      retries: 3
   interval: 5m
-  sourceRef:
-    kind: HelmRepository
-    name: gatekeeper-github-repo
-  valuesFiles:
-    - compiled/dev/gatekeeper/helm-values-files/common.yml
-  version: 3.5.1
+  releaseName: NAME
+  values:
+    audit:
+      affinity: {}
+      hostNetwork: false
+      nodeSelector:
+        kubernetes.io/os: linux
+      priorityClassName: system-cluster-critical
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      tolerations: []
+    auditChunkSize: 0
+    auditFromCache: false
+    auditInterval: 60
+    auditMatchKindOnly: false
+    constraintViolationsLimit: 20
+    controllerManager:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: gatekeeper.sh/operation
+                      operator: In
+                      values:
+                        - webhook
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      hostNetwork: false
+      nodeSelector:
+        kubernetes.io/os: linux
+      priorityClassName: system-cluster-critical
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      tolerations: []
+    disableValidatingWebhook: false
+    disabledBuiltins: null
+    emitAdmissionEvents: false
+    emitAuditEvents: false
+    enableDeleteOperations: false
+    experimentalEnableMutation: false
+    image:
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+      release: v3.5.1
+      repository: openpolicyagent/gatekeeper
+    logDenies: false
+    logLevel: INFO
+    pdb:
+      controllerManager:
+        minAvailable: 1
+    podAnnotations:
+      container.seccomp.security.alpha.kubernetes.io/manager: runtime/default
+    podCountLimit: 100
+    podLabels: {}
+    postInstall:
+      labelNamespace:
+        enabled: true
+        image:
+          pullPolicy: IfNotPresent
+          pullSecrets: []
+          repository: line/kubectl-kustomize
+          tag: 1.20.4-4.0.5
+    replicas: 3
+    secretAnnotations: {}
+    service: {}
+    validatingWebhookTimeoutSeconds: 3
