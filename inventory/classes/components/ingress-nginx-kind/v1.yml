@@ -8,15 +8,6 @@ parameters:
         output_path: components/ingress-nginx-kind/deploy.yml
         source: https://raw.githubusercontent.com/kubernetes/ingress-nginx/${ingress_nginx_kind:manifest_version}/deploy/static/provider/kind/deploy.yaml
     compile:
-      - name: template-ingress-nginx-namespace
-        input_type: kadet
-        input_paths:
-          - templates/create-namespace
-        output_type: yml
-        output_path: ingress-nginx-kind/
-        input_params:
-          name: ingress-nginx
-
       - name: copy-ingress-nginx-resources
         input_type: copy
         input_paths:
