@@ -26,9 +26,9 @@ brew_install_kind_and_fluxcd: ## brew installs kind and fluxcd if not present
 	brew list flux || brew install fluxcd/tap/flux
 
 .PHONY: kind_cluster_setup
-kind_cluster_setup: ## creates a kind cluster with the provided CLUSTER_NAME
+kind_cluster_setup: ## creates a kind cluster with the provided CLUSTER_NAME and extra config to support ingress https://kind.sigs.k8s.io/docs/user/ingress/
 	@[ "${CLUSTER_NAME}" ] || ( echo ">> CLUSTER_NAME is not set"; exit 1 )
-	kind create cluster --name $(CLUSTER_NAME) --kubeconfig $(KUBECONFIG)
+	kind create cluster --name $(CLUSTER_NAME) --kubeconfig $(KUBECONFIG) --config=$(PWD)/scripts/kind-config.yml
 
 .PHONY: flux_create_component
 flux_create_component: ## uses flux cli to create flux bootstrap manifests referenced by the flux-system component
