@@ -36,7 +36,7 @@ class HelmRepository(BaseObj):
         self.update_root("templates/fluxcd-helm/HelmRepository.yml")
 
     def body(self):
-        self.root.metadata.name = self.kwargs.name
+        self.root.metadata.name = self.kwargs.repository_name
         self.root.metadata.namespace = self.kwargs.namespace
         self.root.spec.url = self.kwargs.repository_url
 
@@ -50,7 +50,7 @@ def main(input_params):
     helm_values_files = input_params.get("helm_values_files")
 
     obj = BaseObj()
-    obj.root.HelmChart = HelmRelease(name=name, namespace=namespace, chart_name=chart_name, chart_version=chart_version, repository_name=repository_name, helm_values_files=helm_values_files)
-    obj.root.HelmRepository = HelmRepository(name=name, namespace=namespace, repository_name=repository_name, repository_url=repository_url)
+    obj.root.HelmRelease = HelmRelease(name=name, namespace=namespace, chart_name=chart_name, chart_version=chart_version, repository_name=repository_name, helm_values_files=helm_values_files)
+    obj.root.HelmRepository = HelmRepository(namespace=namespace, repository_name=repository_name, repository_url=repository_url)
 
     return obj

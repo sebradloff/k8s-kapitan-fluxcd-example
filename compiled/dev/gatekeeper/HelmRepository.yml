@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: gatekeeper
+  name: gatekeeper-github-repo
   namespace: gatekeeper-system
 spec:
   interval: 10m

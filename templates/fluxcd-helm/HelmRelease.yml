@@ -11,7 +11,7 @@ spec:
       version: CHART_VERSION
       sourceRef:
         kind: HelmRepository
-        name: NAME
+        name: REPOSITORY_NAME
         namespace: NAMESPACE
   interval: 5m
   install:
