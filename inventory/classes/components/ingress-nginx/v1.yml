@@ -23,6 +23,7 @@ parameters:
           namespace: ingress-nginx
           chart_name: ingress-nginx
           chart_version: 3.34.0
+          component_version: ${ingress_nginx:version}
           repository_name: ingress-nginx-github-repo
           repository_url: https://kubernetes.github.io/ingress-nginx
           helm_values_files:

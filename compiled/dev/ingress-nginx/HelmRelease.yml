@@ -16,7 +16,7 @@ spec:
     remediation:
       retries: 3
   interval: 5m
-  releaseName: NAME
+  releaseName: v1
   values:
     controller:
       addHeaders: {}

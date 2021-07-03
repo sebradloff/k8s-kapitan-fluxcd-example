@@ -22,6 +22,7 @@ parameters:
           name: gatekeeper
           namespace: gatekeeper-system
           chart_name: gatekeeper
+          component_version: ${gatekeeper:version}
           chart_version: 3.5.1
           repository_name: gatekeeper-github-repo
           repository_url: https://open-policy-agent.github.io/gatekeeper/charts
